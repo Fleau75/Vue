@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Application de Recettes de Cuisine</title>
+        <script src="https://unpkg.com/vue@3"></script>
+        <style>
+            body {
+                font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                background-color: #f8f8f8;
+                color: #333;
+                line-height: 1.6;
+                margin: 20px;
+                padding: 0;
+            }
+
+            input[type="text"],
+            input[type="number"],
+            textarea,
+            button {
+                font-size: 1rem;
+                padding: 10px;
+                margin: 5px 0;
+                display: block;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            input[type="text"]:focus,
+            input[type="number"]:focus,
+            textarea:focus {
+                outline: 2px solid #4a90e2;
+                outline-offset: 2px;
+            }
+
+            button {
+                background-color: #4a90e2;
+                color: white;
+                border: none;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+
+            button:hover {
+                background-color: #357abd;
+            }
+
+            .recipe {
+                background-color: #fff;
+                border: 1px solid #ddd;
+                padding: 20px;
+                margin-bottom: 20px;
+                border-radius: 5px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            }
+
+            .recipe h3 {
+                color: #357abd;
+            }
+
+            .recipe button {
+                margin-top: 10px;
+                background-color: #ff4136;
+            }
+
+            .recipe button:hover {
+                background-color: #e82c0c;
+            }
+
+            :focus {
+                outline: 3px solid #ff4136;
+                outline-offset: 3px;
+            }
+
+            @media (max-width: 768px) {
+                body {
+                    margin: 10px;
+                }
+
+                input[type="text"],
+                input[type="number"],
+                textarea,
+                button {
+                    font-size: 0.9rem;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <form @submit.prevent="addRecipe">
+                <input
+                    v-model="newRecipe.name"
+                    type="text"
+                    placeholder="Nom"
+                    required
+                />
+                <textarea
+                    v-model="newRecipe.ingredients"
+                    placeholder="Ingrédients"
+                    required
+                ></textarea>
+                <textarea
+                    v-model="newRecipe.preparation"
+                    placeholder="Préparation"
+                    required
+                ></textarea>
+                <input
+                    v-model.number="newRecipe.time"
+                    type="number"
+                    placeholder="Temps de préparation (min)"
+                    min="1"
+                    required
+                />
+                <input
+                    v-model.number="newRecipe.people"
+                    type="number"
+                    placeholder="Nombre de personnes"
+                    min="1"
+                    required
+                />
+                <button type="submit">Ajouter la recette</button>
+            </form>
+
+            <div v-for="recipe in recipes" :key="recipe.id" class="recipe">
+                <h3>{{ recipe.name }}</h3>
+                <p><strong>Ingrédients:</strong> {{ recipe.ingredients }}</p>
+                <p><strong>Préparation:</strong> {{ recipe.preparation }}</p>
+                <p><strong>Temps:</strong> {{ recipe.time }} minutes</p>
+                <p><strong>Pour:</strong> {{ recipe.people }} personnes</p>
+                <button @click="deleteRecipe(recipe.id)">Supprimer</button>
+            </div>
+        </div>
+
+        <script src="app.js" defer></script>
+    </body>
+</html>
